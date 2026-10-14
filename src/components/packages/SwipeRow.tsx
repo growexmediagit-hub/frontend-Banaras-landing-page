@@ -74,40 +74,51 @@ export default function SwipeRow({ className, label, children }: Props) {
     }
   };
 
+  const prev = (
+    <button type="button" className="sr-swipe-arrow sr-swipe-arrow--prev" aria-label="Previous" disabled={index <= 0} onClick={() => goTo(index - 1)}>
+      <FiChevronLeft aria-hidden="true" />
+    </button>
+  );
+  const next = (
+    <button type="button" className="sr-swipe-arrow sr-swipe-arrow--next" aria-label="Next" disabled={index >= positions - 1} onClick={() => goTo(index + 1)}>
+      <FiChevronRight aria-hidden="true" />
+    </button>
+  );
+
   return (
     <div className="sr-swipe" role="region" aria-roledescription="carousel" aria-label={label}>
-      <div
-        ref={track}
-        className={className}
-        onScroll={e => setIndex(Math.round(e.currentTarget.scrollLeft / step()))}
-        onPointerDown={onPointerDown}
-        onPointerMove={onPointerMove}
-        onPointerUp={endDrag}
-        onPointerLeave={endDrag}
-      >
-        {children}
+      <div className="sr-swipe-stage">
+        <div
+          ref={track}
+          className={className}
+          onScroll={e => setIndex(Math.round(e.currentTarget.scrollLeft / step()))}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={endDrag}
+          onPointerLeave={endDrag}
+        >
+          {children}
+        </div>
+        {positions > 1 && (
+          <>
+            {prev}
+            {next}
+          </>
+        )}
       </div>
 
       {positions > 1 && (
-        <div className="sr-swipe-nav">
-          <button type="button" className="sr-swipe-arrow" aria-label="Previous" disabled={index <= 0} onClick={() => goTo(index - 1)}>
-            <FiChevronLeft aria-hidden="true" />
-          </button>
-          <div className="sr-swipe-dots">
-            {Array.from({ length: positions }, (_, i) => (
-              <button
-                key={i}
-                type="button"
-                className={i === index ? "is-active" : undefined}
-                aria-label={`Go to slide ${i + 1}`}
-                aria-current={i === index}
-                onClick={() => goTo(i)}
-              />
-            ))}
-          </div>
-          <button type="button" className="sr-swipe-arrow" aria-label="Next" disabled={index >= positions - 1} onClick={() => goTo(index + 1)}>
-            <FiChevronRight aria-hidden="true" />
-          </button>
+        <div className="sr-swipe-dots">
+          {Array.from({ length: positions }, (_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={i === index ? "is-active" : undefined}
+              aria-label={`Go to slide ${i + 1}`}
+              aria-current={i === index}
+              onClick={() => goTo(i)}
+            />
+          ))}
         </div>
       )}
     </div>

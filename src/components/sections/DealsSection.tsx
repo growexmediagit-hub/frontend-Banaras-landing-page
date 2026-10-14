@@ -7,7 +7,11 @@ import ViewButton from "../packages/ViewButton";
 
 /** Up to two theme chips: the package's badge (or first type), then its next type. */
 function themeChips(pkg: TourPackage, config: LandingConfig) {
-  const labels = pkg.types.map(t => config.packageTypes.find(p => p.key === t)?.label).filter((l): l is string => !!l);
+  const labels = pkg.types
+    .map(t => config.packageTypes.find(p => p.key === t)?.label)
+    .filter((l): l is string => !!l)
+    // "Honeymoon Special" already says "Honeymoon" — don't repeat it as its own chip
+    .filter(l => !pkg.badge?.toLowerCase().includes(l.toLowerCase()));
   const chips = pkg.badge ? [pkg.badge, ...labels] : labels;
   return [...new Set(chips)].slice(0, 2);
 }

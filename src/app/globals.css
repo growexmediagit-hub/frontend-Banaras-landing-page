@@ -683,8 +683,46 @@ footer {
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: 0 20px 40px rgba(16, 37, 68, 0.15);
-  animation: srUp 0.3s var(--ease);
+  /* closed: rolled up to its top edge; opens by unrolling downward */
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  clip-path: inset(0 0 100% 0);
+  transition:
+    clip-path 0.45s var(--ease),
+    opacity 0.3s ease,
+    transform 0.45s var(--ease),
+    visibility 0s linear 0.45s;
 }
+
+.sr-contact-menu.is-open {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  /* opened clip sits outside the box so the shadow and hover bridge aren't cut */
+  clip-path: inset(-12px -40px -60px -40px);
+  transition:
+    clip-path 0.5s var(--ease),
+    opacity 0.25s ease,
+    transform 0.5s var(--ease),
+    visibility 0s;
+}
+
+/* rows drop in one after another */
+.sr-contact-menu li {
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.3s ease, transform 0.4s var(--ease);
+}
+
+.sr-contact-menu.is-open li {
+  opacity: 1;
+  transform: none;
+}
+
+.sr-contact-menu.is-open li:nth-child(1) { transition-delay: 0.06s; }
+.sr-contact-menu.is-open li:nth-child(2) { transition-delay: 0.12s; }
+.sr-contact-menu.is-open li:nth-child(3) { transition-delay: 0.18s; }
 
 /* Invisible bridge over the 10px gap so hover doesn't drop between pill and menu. */
 .sr-contact-menu::before {
@@ -2463,9 +2501,15 @@ footer {
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
   /* room for the hover lift and shadow inside the scroller */
-  margin: -12px -12px 0;
-  padding: 12px 12px 28px;
-  scroll-padding-inline: 12px;
+  --row-edge: 24px;
+  margin: -24px calc(var(--row-edge) * -1) -20px;
+  padding: 24px var(--row-edge) 44px;
+  scroll-padding-inline: var(--row-edge);
+  /* The side padding holds the cards' shadows, but it also shows a sliver of the card
+     scrolled just out of view (its shadow, cut off hard at the scroller edge).
+     Fade both side strips out so only the in-view cards read. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--row-edge), #000 calc(100% - var(--row-edge)), transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0, #000 var(--row-edge), #000 calc(100% - var(--row-edge)), transparent 100%);
   cursor: grab;
   user-select: none;
 }
@@ -2488,46 +2532,56 @@ footer {
   pointer-events: none;
 }
 
-/* carousel controls: ‹ dots › */
-.sr-swipe-nav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 22px;
-  margin-top: 10px;
+/* carousel: arrows sit on the left/right edges of the row, dots below */
+.sr-swipe-stage {
+  position: relative;
 }
 
 .sr-swipe-arrow {
+  position: absolute;
+  /* the track's bottom padding outweighs its top, so nudge up to the cards' centre */
+  top: calc(50% - 12px);
+  z-index: 3;
   display: grid;
   place-items: center;
-  width: 52px;
-  height: 52px;
+  width: 54px;
+  height: 54px;
   border: 1px solid var(--line);
   border-radius: 50%;
   background: var(--white);
   color: var(--navy);
-  font-size: 1.3rem;
-  box-shadow: 0 8px 20px rgba(16, 37, 68, 0.08);
-  transition: background-color 0.3s, color 0.3s, border-color 0.3s, opacity 0.3s, transform 0.3s var(--ease);
+  font-size: 1.35rem;
+  box-shadow: 0 10px 26px rgba(16, 37, 68, 0.16);
+  transform: translateY(-50%);
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s, opacity 0.35s, transform 0.35s var(--ease);
+}
+
+.sr-swipe-arrow--prev {
+  left: -27px;
+}
+
+.sr-swipe-arrow--next {
+  right: -27px;
 }
 
 .sr-swipe-arrow:hover:not(:disabled) {
   background: var(--navy);
   border-color: var(--navy);
   color: var(--white);
-  transform: translateY(-1px);
+  transform: translateY(-50%) scale(1.06);
 }
 
 .sr-swipe-arrow:disabled {
-  opacity: 0.4;
-  box-shadow: none;
-  cursor: default;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .sr-swipe-dots {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  margin-top: 6px;
 }
 
 .sr-swipe-dots button {
@@ -2559,7 +2613,9 @@ footer {
   border-radius: 28px;
   background: var(--navy);
   color: var(--white);
-  box-shadow: 0 18px 40px rgba(16, 37, 68, 0.16);
+  /* kept inside the scroller's 24px side / 44px bottom padding — a larger shadow
+     gets clipped at the scroll edge and shows up as a grey box behind the row */
+  box-shadow: 0 8px 16px rgba(16, 37, 68, 0.12);
   transition:
     transform 0.4s var(--ease),
     box-shadow 0.4s var(--ease);
@@ -2567,7 +2623,7 @@ footer {
 
 .sr-excl:hover {
   transform: translateY(-6px);
-  box-shadow: 0 28px 54px rgba(16, 37, 68, 0.24);
+  box-shadow: 0 14px 20px rgba(16, 37, 68, 0.18);
 }
 
 .sr-excl img {
@@ -2725,14 +2781,14 @@ footer {
   .sr-excl-row {
     grid-auto-columns: min(78%, 360px);
     gap: 16px;
-    margin: -12px -20px 0;
-    padding: 12px 20px 24px;
-    scroll-padding-inline: 20px;
+    --row-edge: 20px;
+    margin: -12px calc(var(--row-edge) * -1) 0;
+    padding: 12px var(--row-edge) 24px;
   }
 
+  /* phones and tablets swipe; the edge arrows would sit over the cards */
   .sr-swipe-arrow {
-    width: 44px;
-    height: 44px;
+    display: none;
   }
 
   .sr-excl:hover {

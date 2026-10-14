@@ -65,25 +65,24 @@ export default function ContactPill({ greeting }: { greeting: string }) {
         </span>
       </button>
 
-      {open && (
-        <ul className="sr-contact-menu" role="menu" onPointerEnter={hoverOpen}>
-          <li role="none">
-            <a role="menuitem" href={`tel:${SITE.phoneE164}`} onClick={() => setOpen(false)}>
-              <FiPhone aria-hidden="true" /> Call {SITE.phoneDisplay}
-            </a>
-          </li>
-          <li role="none">
-            <a role="menuitem" href={wa} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
-              <FaWhatsapp aria-hidden="true" /> Chat on WhatsApp
-            </a>
-          </li>
-          <li role="none">
-            <a role="menuitem" href={`mailto:${SITE.email}`} onClick={() => setOpen(false)}>
-              <FiMail aria-hidden="true" /> {SITE.email}
-            </a>
-          </li>
-        </ul>
-      )}
+      {/* Always mounted so it can unroll top → bottom and roll back up; inert while closed. */}
+      <ul className={`sr-contact-menu${open ? " is-open" : ""}`} role="menu" inert={!open} onPointerEnter={hoverOpen}>
+        <li role="none">
+          <a role="menuitem" href={`tel:${SITE.phoneE164}`} onClick={() => setOpen(false)}>
+            <FiPhone aria-hidden="true" /> Call {SITE.phoneDisplay}
+          </a>
+        </li>
+        <li role="none">
+          <a role="menuitem" href={wa} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
+            <FaWhatsapp aria-hidden="true" /> Chat on WhatsApp
+          </a>
+        </li>
+        <li role="none">
+          <a role="menuitem" href={`mailto:${SITE.email}`} onClick={() => setOpen(false)}>
+            <FiMail aria-hidden="true" /> {SITE.email}
+          </a>
+        </li>
+      </ul>
     </div>
   );
 }
