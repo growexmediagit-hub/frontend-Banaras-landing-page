@@ -16,6 +16,7 @@ import OfferBanner from "./sections/OfferBanner";
 import PackagesSection from "./sections/PackagesSection";
 import PhotoGallery from "./sections/PhotoGallery";
 import PlanTrip from "./sections/PlanTrip";
+import Reviews from "./sections/Reviews";
 import SeoContent from "./sections/SeoContent";
 import WhyUs from "./sections/WhyUs";
 import { days, type LandingConfig } from "@/data/landing";
@@ -121,7 +122,13 @@ function structuredData(config: LandingConfig) {
 }
 
 /** One destination landing page, entirely driven by its config. */
-export default function LandingPage({ config }: { config: LandingConfig }) {
+export default function LandingPage({ config: source }: { config: LandingConfig }) {
+  // Sample reviews are layout placeholders — drop them from production builds entirely,
+  // so they're neither rendered nor serialised into the page data for client components.
+  const config: LandingConfig =
+    process.env.NODE_ENV === "production" && source.reviews
+      ? { ...source, reviews: { ...source.reviews, items: source.reviews.items.filter(r => !r.sample) } }
+      : source;
   return (
     <EnquiryProvider config={config}>
       <script
@@ -142,6 +149,7 @@ export default function LandingPage({ config }: { config: LandingConfig }) {
         <Experiences config={config} />
         <Destinations config={config} />
         <WhyUs config={config} />
+        <Reviews config={config} />
         <PlanTrip config={config} />
         <Faq config={config} />
         <SeoContent config={config} />

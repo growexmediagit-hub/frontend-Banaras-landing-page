@@ -49,7 +49,7 @@ export default function PackageQuickView({ packageId, onClose }: { packageId: st
         </button>
 
         <div className="sr-qv-media">
-          <Image src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 560px) 100vw, 520px" />
+          <Image quality={90} src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 560px) 100vw, 520px" />
           {save > 0 && <span className="sr-card-save">Save {formatINR(save)}</span>}
         </div>
 

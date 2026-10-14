@@ -69,7 +69,7 @@ export default function EnquiryModal({ packageId, source, onClose }: Props) {
           {pkg ? (
             <div className="sr-modal-pkg">
               <span className="sr-modal-pkg-thumb">
-                <Image src={pkg.image} alt="" fill sizes="72px" />
+                <Image quality={90} src={pkg.image} alt="" fill sizes="72px" />
               </span>
               <div>
                 <p id="sr-modal-title" className="sr-modal-pkg-title">{pkg.title}</p>

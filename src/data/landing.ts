@@ -37,6 +37,22 @@ export type TourPackage = {
 
 export type Slide = { image: StaticImageData; alt: string };
 
+export type Review = {
+  name: string;
+  location?: string;
+  /** 1–5 */
+  rating: number;
+  text: string;
+  /** Opens this package's quick view from "View this package". */
+  packageId?: string;
+  photo?: StaticImageData;
+  photoAlt?: string;
+  /** Short muted clip in /public, e.g. "/reviews/aditya.mp4"; the photo is its poster. */
+  video?: string;
+  /** Layout-only placeholder — rendered in development, never in a production build. */
+  sample?: boolean;
+};
+
 export type ImageItem = { name: string; tagline: string; image: StaticImageData; alt: string };
 
 export type FactIcon = "calendar" | "plane" | "car" | "currency" | "clock" | "passport";
@@ -104,6 +120,8 @@ export type LandingConfig = {
     stamp: [string, string];
     items: { title: string; text: string; icon: "compass" | "shield" | "guide" | "temple" | "food" | "passport" }[];
   };
+  /** Traveller reviews — only real ones go live; entries marked `sample` stay dev-only. */
+  reviews?: { eyebrow: string; title: string; items: Review[] };
   steps: { title: string; text: string }[];
   plan: { image: StaticImageData; eyebrow: string; title: string; lead: string; formTitle: string };
   faq: { title: string; lead: string; items: { q: string; a: string }[] };

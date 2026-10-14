@@ -13,7 +13,7 @@ export default function Hero({ config }: { config: LandingConfig }) {
 
   return (
     <section id="top" className="sr-hero" aria-labelledby="sr-hero-title">
-      <Image
+      <Image quality={90}
         src={hero.image}
         alt={hero.imageAlt}
         fill

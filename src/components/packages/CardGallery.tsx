@@ -36,7 +36,7 @@ export default function CardGallery({ slides, packageId, priority = false, child
       >
         {slides.map((s, i) => (
           <div key={s.image.src} className="sr-card-slide">
-            <Image
+            <Image quality={90}
               src={s.image}
               alt={s.alt}
               fill

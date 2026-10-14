@@ -28,7 +28,7 @@ export default function SeoContent({ config }: { config: LandingConfig }) {
           <div className="sr-expert-body">
             <span className="sr-expert-avatar" aria-hidden="true">
               {config.expertPhoto ? (
-                <Image src={config.expertPhoto} alt="" width={72} height={72} sizes="72px" />
+                <Image quality={90} src={config.expertPhoto} alt="" width={72} height={72} sizes="72px" />
               ) : (
                 <FiHeadphones />
               )}

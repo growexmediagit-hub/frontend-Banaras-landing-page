@@ -9,7 +9,7 @@ export default function PlanTrip({ config }: { config: LandingConfig }) {
   const { plan } = config;
   return (
     <section id="plan" className="sr-plan" aria-labelledby="sr-plan-title">
-      <Image src={plan.image} alt="" fill placeholder="blur" sizes="100vw" className="sr-plan-bg" />
+      <Image quality={90} src={plan.image} alt="" fill placeholder="blur" sizes="100vw" className="sr-plan-bg" />
       <div className="sr-plan-shade" aria-hidden="true" />
       <div className="sr-container sr-plan-grid">
         <div className="sr-plan-copy" data-aos="fade-right">

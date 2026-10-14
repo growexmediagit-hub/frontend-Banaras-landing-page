@@ -12,7 +12,7 @@ export default function Footer({ config }: { config: LandingConfig }) {
       <div className="sr-container sr-footer-grid">
         <div>
           <span className="sr-footer-logo">
-            <Image src={logo} alt={`${SITE.brand} Travel Company`} sizes="180px" />
+            <Image quality={90} src={logo} alt={`${SITE.brand} Travel Company`} sizes="180px" />
           </span>
           <p className="sr-footer-about">
             Crafting extraordinary travel experiences for the modern explorer. We believe in journeys that transform.

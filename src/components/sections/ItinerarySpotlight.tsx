@@ -77,7 +77,7 @@ export default function ItinerarySpotlight({ config }: { config: LandingConfig }
           <aside className="sr-itin-aside" data-aos="fade-left">
             <div className="sr-price-card">
               <div className="sr-price-card-media">
-                <Image src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 900px) 100vw, 380px" />
+                <Image quality={90} src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 900px) 100vw, 380px" />
                 {pkg.badge && <span className="sr-card-badge">{pkg.badge}</span>}
               </div>
               <div className="sr-price-card-body">

@@ -51,7 +51,7 @@ export default function Header() {
 
       <div className="sr-nav">
         <a href="#top" className="sr-logo" aria-label={`${SITE.brand} — back to top`}>
-          <Image src={logo} alt={`${SITE.brand} Travel Company`} priority sizes="170px" />
+          <Image quality={90} src={logo} alt={`${SITE.brand} Travel Company`} priority sizes="170px" />
         </a>
 
         <nav id="sr-menu" className={`sr-menu${menuOpen ? " is-open" : ""}`} aria-label="Main">
