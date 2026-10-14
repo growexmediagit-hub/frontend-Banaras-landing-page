@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FiCheck, FiClock, FiExternalLink, FiMapPin, FiX } from "react-icons/fi";
 import { durationLabel, formatINR, spotlightPackage, type LandingConfig } from "@/data/landing";
 import EnquireButton from "../enquiry/EnquireButton";
+import ShareWhatsApp from "../packages/ShareWhatsApp";
 import RouteMap from "./RouteMap";
 
 /** Day-by-day plan of the bestseller package. */
@@ -102,6 +103,7 @@ export default function ItinerarySpotlight({ config }: { config: LandingConfig }
                 )}
               </div>
             </div>
+            <ShareWhatsApp pkg={pkg} unit={config.priceUnit} />
           </aside>
         </div>
       </div>

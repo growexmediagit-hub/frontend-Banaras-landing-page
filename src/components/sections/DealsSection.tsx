@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FiArrowRight } from "react-icons/fi";
 import { LuCalendarDays, LuHeart, LuSparkles, LuTag } from "react-icons/lu";
 import { days, formatINR, type LandingConfig, type TourPackage } from "@/data/landing";
+import SwipeRow from "../packages/SwipeRow";
 import ViewButton from "../packages/ViewButton";
 
 /** Up to two theme chips: the package's badge (or first type), then its next type. */
@@ -11,9 +12,9 @@ function themeChips(pkg: TourPackage, config: LandingConfig) {
   return [...new Set(chips)].slice(0, 2);
 }
 
-/** "Srivastava Route Exclusives" — the three lowest-priced trips as tall photo cards. */
+/** "Srivastava Route Exclusives" — every trip, cheapest first, as a swipeable row of tall photo cards. */
 export default function DealsSection({ config }: { config: LandingConfig }) {
-  const deals = [...config.packages].sort((a, b) => a.price - b.price).slice(0, 3);
+  const deals = [...config.packages].sort((a, b) => a.price - b.price);
 
   return (
     <section id="deals" className="sr-section" aria-labelledby="sr-deals-title">
@@ -25,12 +26,12 @@ export default function DealsSection({ config }: { config: LandingConfig }) {
           <p className="sr-excl-lead">{config.deals.lead}</p>
         </div>
 
-        <div className="sr-excl-row">
+        <SwipeRow className="sr-excl-row" label={`${config.deals.place} packages`}>
           {deals.map((pkg, i) => {
             const save = pkg.oldPrice ? pkg.oldPrice - pkg.price : 0;
             return (
-              <article key={pkg.id} className="sr-excl" data-aos="fade-up" data-aos-delay={i * 90}>
-                <Image quality={90} src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 900px) 80vw, 420px" />
+              <article key={pkg.id} className="sr-excl" data-aos={i < 3 ? "fade-up" : undefined} data-aos-delay={i < 3 ? i * 90 : undefined}>
+                <Image quality={90} src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" draggable={false} sizes="(max-width: 900px) 80vw, 420px" />
                 <div className="sr-excl-shade" aria-hidden="true" />
 
                 <p className="sr-excl-price">
@@ -67,7 +68,7 @@ export default function DealsSection({ config }: { config: LandingConfig }) {
               </article>
             );
           })}
-        </div>
+        </SwipeRow>
       </div>
     </section>
   );
