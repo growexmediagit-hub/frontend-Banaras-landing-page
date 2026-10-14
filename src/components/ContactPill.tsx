@@ -9,6 +9,23 @@ import { SITE, whatsappLink } from "@/data/site";
 export default function ContactPill({ greeting }: { greeting: string }) {
   const [open, setOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const pointerType = useRef("");
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Mouse users get hover-to-open; touch keeps tap-to-toggle.
+  const hoverOpen = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+  const hoverClose = (e: React.PointerEvent) => {
+    if (e.pointerType !== "mouse") return;
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
+  };
+
+  useEffect(() => () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
@@ -27,7 +44,7 @@ export default function ContactPill({ greeting }: { greeting: string }) {
   const wa = whatsappLink(greeting);
 
   return (
-    <div className="sr-contact" ref={rootRef}>
+    <div className="sr-contact" ref={rootRef} onPointerLeave={hoverClose}>
       <a className="sr-contact-wa" href={wa} target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
         <FaWhatsapp aria-hidden="true" />
       </a>
@@ -37,7 +54,10 @@ export default function ContactPill({ greeting }: { greeting: string }) {
         className="sr-contact-pill"
         aria-haspopup="menu"
         aria-expanded={open}
-        onClick={() => setOpen(o => !o)}
+        onPointerEnter={hoverOpen}
+        onPointerDown={e => (pointerType.current = e.pointerType)}
+        // A mouse click after hover-open shouldn't snap it shut; touch/keyboard still toggle.
+        onClick={e => setOpen(o => (pointerType.current === "mouse" && e.detail > 0 ? true : !o))}
       >
         {SITE.phoneDisplay}
         <span className="sr-contact-chevron" aria-hidden="true">
@@ -46,7 +66,7 @@ export default function ContactPill({ greeting }: { greeting: string }) {
       </button>
 
       {open && (
-        <ul className="sr-contact-menu" role="menu">
+        <ul className="sr-contact-menu" role="menu" onPointerEnter={hoverOpen}>
           <li role="none">
             <a role="menuitem" href={`tel:${SITE.phoneE164}`} onClick={() => setOpen(false)}>
               <FiPhone aria-hidden="true" /> Call {SITE.phoneDisplay}

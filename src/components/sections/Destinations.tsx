@@ -27,7 +27,7 @@ export default function Destinations({ config }: { config: LandingConfig }) {
         </div>
 
         <div className="sr-center" data-aos="fade-up">
-          <EnquireButton source="destinations" className="sr-btn sr-btn--gold">
+          <EnquireButton source="destinations" className="sr-btn sr-btn--light">
             {places.cta}
           </EnquireButton>
         </div>

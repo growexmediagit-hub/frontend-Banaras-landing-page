@@ -209,7 +209,7 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
 
       <button
         type="submit"
-        className={variant === "modal" ? "sr-modal-submit" : "sr-btn sr-btn--gold sr-btn--block"}
+        className={variant === "modal" ? "sr-modal-submit" : "sr-btn sr-btn--navy sr-btn--block"}
         disabled={status === "sending"}
       >
         {status === "sending" ? "Sending…" : submitLabel}

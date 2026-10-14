@@ -92,7 +92,7 @@ export default function ItinerarySpotlight({ config }: { config: LandingConfig }
                   {pkg.oldPrice && <s>{formatINR(pkg.oldPrice)}</s>}
                   <span>{config.priceUnit.replace("/", "per ")}</span>
                 </p>
-                <EnquireButton packageId={pkg.id} source="itinerary" className="sr-btn sr-btn--gold sr-btn--block">
+                <EnquireButton packageId={pkg.id} source="itinerary" className="sr-btn sr-btn--navy sr-btn--block">
                   Plan This Trip
                 </EnquireButton>
                 {pkg.detailsUrl && (

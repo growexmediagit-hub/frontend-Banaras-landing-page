@@ -38,7 +38,7 @@ export default function SeoContent({ config }: { config: LandingConfig }) {
           <a href={`tel:${SITE.phoneE164}`} className="sr-expert-phone">
             <FiPhone aria-hidden="true" /> {SITE.phoneDisplay}
           </a>
-          <EnquireButton source="expert-card" className="sr-btn sr-btn--gold sr-expert-cta">
+          <EnquireButton source="expert-card" className="sr-btn sr-btn--navy sr-expert-cta">
             Make an Enquiry
           </EnquireButton>
         </aside>

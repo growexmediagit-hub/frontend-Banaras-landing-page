@@ -10,7 +10,7 @@ type Props = {
 };
 
 /** Any "Enquire / Book / Plan" CTA — opens the shared enquiry modal. */
-export default function EnquireButton({ packageId, source, className = "sr-btn sr-btn--gold", children }: Props) {
+export default function EnquireButton({ packageId, source, className = "sr-btn sr-btn--navy", children }: Props) {
   const { open } = useEnquiry();
   return (
     <button type="button" className={className} onClick={() => open({ packageId, source })}>
