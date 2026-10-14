@@ -76,7 +76,7 @@ export default function PhotoGallery({ config }: { config: LandingConfig }) {
               aria-hidden={off !== 0}
               onClick={() => !dragged.current && Math.abs(off) === 1 && go(off)}
             >
-              <Image
+              <Image quality={90}
                 src={item.image}
                 alt={item.alt}
                 fill

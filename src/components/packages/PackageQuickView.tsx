@@ -8,6 +8,7 @@ import { daysNightsLabel, formatINR } from "@/data/landing";
 import { whatsappLink } from "@/data/site";
 import { useEnquiry, useLanding } from "../enquiry/EnquiryProvider";
 import { INCLUDE_META } from "./includes";
+import ShareWhatsApp from "./ShareWhatsApp";
 
 /** Package details popup behind a card's "View" button — everything the slim card leaves out. */
 export default function PackageQuickView({ packageId, onClose }: { packageId: string; onClose: () => void }) {
@@ -49,7 +50,7 @@ export default function PackageQuickView({ packageId, onClose }: { packageId: st
         </button>
 
         <div className="sr-qv-media">
-          <Image src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 560px) 100vw, 520px" />
+          <Image quality={90} src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 560px) 100vw, 520px" />
           {save > 0 && <span className="sr-card-save">Save {formatINR(save)}</span>}
         </div>
 
@@ -116,6 +117,8 @@ export default function PackageQuickView({ packageId, onClose }: { packageId: st
               </button>
             </div>
           </div>
+
+          <ShareWhatsApp pkg={pkg} unit={config.priceUnit} className="sr-share-wa sr-share-wa--qv" />
 
           {pkg.detailsUrl && (
             <a href={pkg.detailsUrl} target="_blank" rel="noopener" className="sr-price-card-link sr-qv-link">

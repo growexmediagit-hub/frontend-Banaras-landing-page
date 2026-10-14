@@ -13,7 +13,7 @@ export default function Hero({ config }: { config: LandingConfig }) {
 
   return (
     <section id="top" className="sr-hero" aria-labelledby="sr-hero-title">
-      <Image
+      <Image quality={90}
         src={hero.image}
         alt={hero.imageAlt}
         fill
@@ -38,7 +38,7 @@ export default function Hero({ config }: { config: LandingConfig }) {
           </p>
 
           <div className="sr-hero-ctas sr-hero-in" style={delay(240)}>
-            <a href="#packages" className="sr-btn sr-btn--light">
+            <a href="#packages" className="sr-btn sr-btn--gold">
               Explore Packages <FiArrowRight aria-hidden="true" />
             </a>
             <EnquireButton source="hero" className="sr-btn sr-btn--ghost">

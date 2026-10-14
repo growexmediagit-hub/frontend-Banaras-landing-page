@@ -1,37 +1,24 @@
 import Image from "next/image";
-import { FiChevronRight } from "react-icons/fi";
-import { daysNightsLabel, formatINR, type LandingConfig, type TourPackage } from "@/data/landing";
-import EnquireButton from "../enquiry/EnquireButton";
+import { FiArrowRight } from "react-icons/fi";
+import { LuCalendarDays, LuHeart, LuSparkles, LuTag } from "react-icons/lu";
+import { days, formatINR, type LandingConfig, type TourPackage } from "@/data/landing";
+import SwipeRow from "../packages/SwipeRow";
+import ViewButton from "../packages/ViewButton";
 
-/** First two stops as "2N Pattaya › 2N Bangkok", the rest folded into "+N". */
-function StopTrail({ pkg }: { pkg: TourPackage }) {
-  const stops = pkg.stops ?? pkg.route;
-  return (
-    <p className="sr-excl-stops">
-      {stops.slice(0, 2).map((stop, i) => {
-        const [n, ...place] = stop.split(" ");
-        const hasNights = /^\d+N$/.test(n);
-        return (
-          <span key={stop} className="sr-excl-stop">
-            {i > 0 && <FiChevronRight aria-hidden="true" />}
-            {hasNights ? (
-              <>
-                <strong>{n}</strong> {place.join(" ")}
-              </>
-            ) : (
-              stop
-            )}
-          </span>
-        );
-      })}
-      {stops.length > 2 && <strong className="sr-excl-more">+{stops.length - 2}</strong>}
-    </p>
-  );
+/** Up to two theme chips: the package's badge (or first type), then its next type. */
+function themeChips(pkg: TourPackage, config: LandingConfig) {
+  const labels = pkg.types
+    .map(t => config.packageTypes.find(p => p.key === t)?.label)
+    .filter((l): l is string => !!l)
+    // "Honeymoon Special" already says "Honeymoon" — don't repeat it as its own chip
+    .filter(l => !pkg.badge?.toLowerCase().includes(l.toLowerCase()));
+  const chips = pkg.badge ? [pkg.badge, ...labels] : labels;
+  return [...new Set(chips)].slice(0, 2);
 }
 
-/** "Srivastava Route Exclusives" — the three lowest-priced trips as tall photo cards. */
+/** "Srivastava Route Exclusives" — every trip, cheapest first, as a swipeable row of tall photo cards. */
 export default function DealsSection({ config }: { config: LandingConfig }) {
-  const deals = [...config.packages].sort((a, b) => a.price - b.price).slice(0, 3);
+  const deals = [...config.packages].sort((a, b) => a.price - b.price);
 
   return (
     <section id="deals" className="sr-section" aria-labelledby="sr-deals-title">
@@ -43,31 +30,49 @@ export default function DealsSection({ config }: { config: LandingConfig }) {
           <p className="sr-excl-lead">{config.deals.lead}</p>
         </div>
 
-        <div className="sr-excl-row">
-          {deals.map((pkg, i) => (
-            <article key={pkg.id} className="sr-excl" data-aos="fade-up" data-aos-delay={i * 90}>
-              <Image src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" sizes="(max-width: 900px) 80vw, 380px" />
-              <div className="sr-excl-shade" aria-hidden="true" />
-              {pkg.oldPrice && <span className="sr-excl-save">Save {formatINR(pkg.oldPrice - pkg.price)}</span>}
+        <SwipeRow className="sr-excl-row" label={`${config.deals.place} packages`}>
+          {deals.map((pkg, i) => {
+            const save = pkg.oldPrice ? pkg.oldPrice - pkg.price : 0;
+            return (
+              <article key={pkg.id} className="sr-excl" data-aos={i < 3 ? "fade-up" : undefined} data-aos-delay={i < 3 ? i * 90 : undefined}>
+                <Image quality={90} src={pkg.image} alt={pkg.imageAlt} fill placeholder="blur" draggable={false} sizes="(max-width: 900px) 80vw, 420px" />
+                <div className="sr-excl-shade" aria-hidden="true" />
 
-              <div className="sr-excl-body">
-                <p className="sr-excl-duration">{daysNightsLabel(pkg.nights)}</p>
-                <h3 className="sr-excl-name">{pkg.title}</h3>
-                <StopTrail pkg={pkg} />
+                <p className="sr-excl-price">
+                  {pkg.oldPrice && <s>{formatINR(pkg.oldPrice)}</s>}
+                  <strong>{formatINR(pkg.price)}</strong>
+                  <span>{config.priceUnit}</span>
+                </p>
 
-                <div className="sr-excl-foot">
-                  <p className="sr-excl-price">
-                    {pkg.oldPrice && <s>{formatINR(pkg.oldPrice)}</s>}
-                    <strong>{formatINR(pkg.price)}</strong> <span>{config.priceUnit}</span>
-                  </p>
-                  <EnquireButton packageId={pkg.id} source="deals" className="sr-btn sr-excl-cta">
-                    Request Callback
-                  </EnquireButton>
+                <div className="sr-excl-body">
+                  <h3 className="sr-excl-name">{pkg.title}</h3>
+                  <p className="sr-excl-route">{pkg.route.join(", ")}</p>
+
+                  <ul className="sr-excl-chips" aria-label="Trip details">
+                    {themeChips(pkg, config).map(label => (
+                      <li key={label}>
+                        {/honeymoon|couple/i.test(label) ? <LuHeart aria-hidden="true" /> : <LuSparkles aria-hidden="true" />}
+                        {label}
+                      </li>
+                    ))}
+                    <li>
+                      <LuCalendarDays aria-hidden="true" /> {days(pkg.nights)} Days
+                    </li>
+                    {save > 0 && (
+                      <li className="sr-excl-chip-save">
+                        <LuTag aria-hidden="true" /> Save {formatINR(save)}
+                      </li>
+                    )}
+                  </ul>
+
+                  <ViewButton packageId={pkg.id} className="sr-excl-cta">
+                    Explore package <FiArrowRight aria-hidden="true" />
+                  </ViewButton>
                 </div>
-              </div>
-            </article>
-          ))}
-        </div>
+              </article>
+            );
+          })}
+        </SwipeRow>
       </div>
     </section>
   );
