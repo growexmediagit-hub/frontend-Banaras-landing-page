@@ -46,8 +46,6 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
   const [submitted, setSubmitted] = useState<Lead | null>(null);
 
   const rule = phoneRule(form.countryCode);
-  // The popup keeps its button muted until the two fields look complete (atravelq behaviour).
-  const incomplete = variant === "modal" && (form.name.trim().length < 2 || form.phone.length < rule.min);
   const set = (k: keyof typeof form, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -212,7 +210,7 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
       <button
         type="submit"
         className={variant === "modal" ? "sr-modal-submit" : "sr-btn sr-btn--gold sr-btn--block"}
-        disabled={status === "sending" || incomplete}
+        disabled={status === "sending"}
       >
         {status === "sending" ? "Sending…" : submitLabel}
       </button>

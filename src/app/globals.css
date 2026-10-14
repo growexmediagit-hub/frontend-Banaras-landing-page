@@ -825,11 +825,20 @@ footer {
   color: rgba(255, 255, 255, 0.82);
 }
 
+/* price + discount as one glass pill, readable over any photo */
 .sr-hero-from {
-  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 26px;
+  padding: 6px 6px 6px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(6, 20, 46, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.85);
-  text-shadow: 0 1px 8px rgba(6, 20, 46, 0.55);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .sr-hero-from strong {
@@ -838,21 +847,31 @@ footer {
 }
 
 /* discount chip with a light band sweeping left → right */
-.sr-hero-from .sr-hero-off {
+.sr-hero-off {
   position: relative;
   overflow: hidden;
-  display: inline-block;
-  margin: 0 3px;
-  padding: 1px 8px;
-  border-radius: 6px;
+  padding: 6px 14px;
+  border-radius: 999px;
   background: var(--gold-grad);
   color: var(--navy-900);
-  font-size: 0.92em;
+  font-size: 0.85rem;
   font-weight: 700;
-  line-height: 1.5;
-  vertical-align: 1px;
+  line-height: 1.2;
+  white-space: nowrap;
   text-shadow: none;
-  box-shadow: 0 4px 12px rgba(6, 20, 46, 0.3);
+}
+
+@media (max-width: 420px) {
+  .sr-hero-from {
+    gap: 8px;
+    padding-left: 12px;
+    font-size: 0.8rem;
+  }
+
+  .sr-hero-off {
+    padding: 5px 10px;
+    font-size: 0.76rem;
+  }
 }
 
 .sr-hero-off::after {
@@ -3839,7 +3858,7 @@ footer {
 
 .sr-modal-offer-save {
   font-family: var(--font-sans);
-  font-size: clamp(2rem, 6vw, 2.5rem);
+  font-size: clamp(1.6rem, 4.5vw, 1.9rem);
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1.1;
@@ -3854,9 +3873,10 @@ footer {
 }
 
 .sr-modal-offer-sub {
-  margin-top: 8px;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  max-width: 400px;
+  margin: 6px auto 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
   color: var(--muted);
 }
 
@@ -3938,23 +3958,23 @@ footer {
   min-height: 56px;
   border: 0;
   border-radius: 14px;
-  background: var(--navy);
+  background: var(--gold);
   color: var(--white);
   font-size: 1.08rem;
   font-weight: 600;
-  box-shadow: 0 10px 22px rgba(10, 31, 68, 0.22);
+  box-shadow: 0 10px 24px rgba(196, 154, 69, 0.35);
+  cursor: pointer;
   transition: background-color 0.3s, opacity 0.3s, box-shadow 0.3s, transform 0.3s var(--ease);
 }
 
 .sr-modal-submit:hover:not(:disabled) {
-  background: var(--navy-700);
+  background: var(--gold-600);
   transform: translateY(-1px);
 }
 
 .sr-modal-submit:disabled {
-  opacity: 0.45;
-  box-shadow: none;
-  cursor: not-allowed;
+  opacity: 0.75;
+  cursor: progress;
 }
 
 @media (max-width: 480px) {

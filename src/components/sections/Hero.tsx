@@ -47,9 +47,11 @@ export default function Hero({ config }: { config: LandingConfig }) {
           </div>
 
           <p className="sr-hero-from sr-hero-in" style={delay(320)}>
-            Packages from <strong>{formatINR(from.price)}</strong>
-            {config.priceUnit}
-            {pct > 0 && <> · up to <strong className="sr-hero-off">{pct}% off</strong> this sale</>}
+            <span>
+              Packages from <strong>{formatINR(from.price)}</strong>
+              {config.priceUnit}
+            </span>
+            {pct > 0 && <span className="sr-hero-off">Up to {pct}% off</span>}
           </p>
         </div>
       </div>
