@@ -1,4 +1,4 @@
-import { packagesOfType, type LandingConfig } from "@/data/landing";
+import { packageSlides, packagesOfType, type LandingConfig } from "@/data/landing";
 import PackageCard from "../packages/PackageCard";
 import ViewAllButton from "../packages/ViewAllButton";
 
@@ -22,7 +22,7 @@ export default function CategoryRows({ config }: { config: LandingConfig }) {
               <div className="sr-grid sr-rail">
                 {pkgs.map((pkg, idx) => (
                   <div key={pkg.id} data-aos="fade-up" data-aos-delay={idx * 100}>
-                    <PackageCard pkg={pkg} unit={config.priceUnit} />
+                    <PackageCard pkg={pkg} slides={packageSlides(config, pkg)} unit={config.priceUnit} />
                   </div>
                 ))}
               </div>

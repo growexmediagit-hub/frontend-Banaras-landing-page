@@ -5,9 +5,10 @@ import { FaWhatsapp } from "react-icons/fa6";
 import { FiCheck } from "react-icons/fi";
 import { COUNTRY_CODES, leadWhatsappText, phoneRule, validateLead, type Lead } from "@/lib/lead";
 import { whatsappLink } from "@/data/site";
-import { useLanding } from "./EnquiryProvider";
+import { useLanding, useLeadSubmitted } from "./EnquiryProvider";
 
-type Variant = "compact" | "full";
+/** compact: hero card · full: plan-trip section · modal: popup (name + phone only). */
+type Variant = "compact" | "full" | "modal";
 
 type Props = {
   variant?: Variant;
@@ -29,6 +30,7 @@ const TRAVELLER_OPTIONS = ["1 Adult", "2 Adults", "3 Adults", "4 Adults", "5–8
 export default function LeadForm({ variant = "compact", source, packageName, submitLabel = "Get Free Itinerary", onSuccess }: Props) {
   const uid = useId();
   const config = useLanding();
+  const leadSubmitted = useLeadSubmitted();
   const [form, setForm] = useState({
     name: "",
     countryCode: "+91",
@@ -44,6 +46,8 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
   const [submitted, setSubmitted] = useState<Lead | null>(null);
 
   const rule = phoneRule(form.countryCode);
+  // The popup keeps its button muted until the two fields look complete (atravelq behaviour).
+  const incomplete = variant === "modal" && (form.name.trim().length < 2 || form.phone.length < rule.min);
   const set = (k: keyof typeof form, v: string) => setForm(f => ({ ...f, [k]: v }));
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,7 +57,7 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
       countryCode: form.countryCode,
       phone: form.phone,
       travelDate: variant === "full" ? form.travelDate : undefined,
-      travellers: form.travellers,
+      travellers: variant === "modal" ? undefined : form.travellers,
       message: variant === "full" ? form.message.trim() : undefined,
       packageName,
       destination: config.name,
@@ -89,6 +93,7 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
     window.fbq?.("track", "Lead", { content_name: packageName ?? `${config.name} Tour Packages` });
     setSubmitted(lead);
     setStatus("done");
+    leadSubmitted();
     onSuccess?.();
   };
 
@@ -170,14 +175,16 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
         </div>
       )}
 
-      <div className="sr-field">
-        <label htmlFor={`${uid}-pax`}>Travellers</label>
-        <select id={`${uid}-pax`} value={form.travellers} onChange={e => set("travellers", e.target.value)}>
-          {TRAVELLER_OPTIONS.map(o => (
-            <option key={o}>{o}</option>
-          ))}
-        </select>
-      </div>
+      {variant !== "modal" && (
+        <div className="sr-field">
+          <label htmlFor={`${uid}-pax`}>Travellers</label>
+          <select id={`${uid}-pax`} value={form.travellers} onChange={e => set("travellers", e.target.value)}>
+            {TRAVELLER_OPTIONS.map(o => (
+              <option key={o}>{o}</option>
+            ))}
+          </select>
+        </div>
+      )}
 
       {variant === "full" && (
         <div className="sr-field sr-field--wide">
@@ -202,10 +209,16 @@ export default function LeadForm({ variant = "compact", source, packageName, sub
 
       {error && <p className="sr-form-error" role="alert">{error}</p>}
 
-      <button type="submit" className="sr-btn sr-btn--gold sr-btn--block" disabled={status === "sending"}>
+      <button
+        type="submit"
+        className={variant === "modal" ? "sr-modal-submit" : "sr-btn sr-btn--gold sr-btn--block"}
+        disabled={status === "sending" || incomplete}
+      >
         {status === "sending" ? "Sending…" : submitLabel}
       </button>
-      <p className="sr-form-note">No spam, no obligation — a {config.specialist} will call you back.</p>
+      {variant !== "modal" && (
+        <p className="sr-form-note">No spam, no obligation — a {config.specialist} will call you back.</p>
+      )}
     </form>
   );
 }

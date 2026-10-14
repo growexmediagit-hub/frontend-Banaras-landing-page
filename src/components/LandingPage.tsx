@@ -14,8 +14,8 @@ import Hero from "./sections/Hero";
 import ItinerarySpotlight from "./sections/ItinerarySpotlight";
 import OfferBanner from "./sections/OfferBanner";
 import PackagesSection from "./sections/PackagesSection";
+import PhotoGallery from "./sections/PhotoGallery";
 import PlanTrip from "./sections/PlanTrip";
-import QuickFacts from "./sections/QuickFacts";
 import SeoContent from "./sections/SeoContent";
 import WhyUs from "./sections/WhyUs";
 import { days, type LandingConfig } from "@/data/landing";
@@ -133,12 +133,12 @@ export default function LandingPage({ config }: { config: LandingConfig }) {
       <Header />
       <main>
         <Hero config={config} />
-        <QuickFacts config={config} />
+        <PhotoGallery config={config} />
         <CategoryRows config={config} />
         <OfferBanner config={config} source="offer-banner-1" />
         <DealsSection config={config} />
-        <PackagesSection config={config} />
         <ItinerarySpotlight config={config} />
+        <PackagesSection config={config} />
         <Experiences config={config} />
         <Destinations config={config} />
         <WhyUs config={config} />

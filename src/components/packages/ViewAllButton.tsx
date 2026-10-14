@@ -8,13 +8,16 @@ export default function ViewAllButton({ type }: { type: string }) {
   return (
     <button
       type="button"
-      className="sr-link-arrow"
+      className="sr-viewall"
       onClick={() => {
         window.dispatchEvent(new CustomEvent(FILTER_EVENT, { detail: type }));
         document.getElementById("packages")?.scrollIntoView({ behavior: "smooth", block: "start" });
       }}
     >
-      View All <FiArrowRight aria-hidden="true" />
+      View all
+      <span className="sr-viewall-icon" aria-hidden="true">
+        <FiArrowRight />
+      </span>
     </button>
   );
 }

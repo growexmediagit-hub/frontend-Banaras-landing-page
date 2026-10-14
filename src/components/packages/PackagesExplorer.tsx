@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { packagesOfType } from "@/data/landing";
+import { packageSlides, packagesOfType } from "@/data/landing";
 import { useLanding } from "../enquiry/EnquiryProvider";
 import PackageCard from "./PackageCard";
 import { FILTER_EVENT } from "./events";
@@ -62,7 +62,7 @@ export default function PackagesExplorer() {
       {/* key re-mounts the grid so the swap animates instead of popping */}
       <div key={type ?? "all"} className="sr-grid sr-rail sr-grid-swap">
         {visible.map(pkg => (
-          <PackageCard key={pkg.id} pkg={pkg} unit={config.priceUnit} />
+          <PackageCard key={pkg.id} pkg={pkg} slides={packageSlides(config, pkg)} unit={config.priceUnit} />
         ))}
       </div>
 

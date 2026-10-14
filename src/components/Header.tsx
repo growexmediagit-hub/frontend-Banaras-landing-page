@@ -6,6 +6,7 @@ import { FiMenu, FiPhone, FiX } from "react-icons/fi";
 import logo from "@/assets/images/srivastava-route-logo.png";
 import { SITE } from "@/data/site";
 import { maxDiscountPct } from "@/data/landing";
+import ContactPill from "./ContactPill";
 import { CountdownInline } from "./Countdown";
 import { useEnquiry, useLanding } from "./enquiry/EnquiryProvider";
 
@@ -42,15 +43,13 @@ export default function Header() {
       <div className="sr-topbar">
         <div className="sr-container sr-topbar-inner">
           <p>
+            <span className="sr-topbar-spark" aria-hidden="true">✦</span>
             <strong>{config.offer.name}</strong> — up to {maxDiscountPct(config)}% off {config.name} packages · ends in <CountdownInline />
           </p>
-          <a href={`tel:${SITE.phoneE164}`} className="sr-topbar-phone">
-            <FiPhone aria-hidden="true" /> {SITE.phoneDisplay}
-          </a>
         </div>
       </div>
 
-      <div className="sr-container sr-nav">
+      <div className="sr-nav">
         <a href="#top" className="sr-logo" aria-label={`${SITE.brand} — back to top`}>
           <Image src={logo} alt={`${SITE.brand} Travel Company`} priority sizes="170px" />
         </a>
@@ -67,6 +66,7 @@ export default function Header() {
         </nav>
 
         <div className="sr-nav-actions">
+          <ContactPill greeting={config.whatsapp.greeting} />
           <button type="button" className="sr-btn sr-btn--gold sr-btn--sm" onClick={() => open({ source: "header" })}>
             Book Now
           </button>

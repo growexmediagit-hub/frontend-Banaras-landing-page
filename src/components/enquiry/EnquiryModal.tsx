@@ -52,15 +52,17 @@ export default function EnquiryModal({ packageId, source, onClose }: Props) {
         aria-labelledby="sr-modal-title"
         onClick={e => e.stopPropagation()}
       >
-        <button type="button" className="sr-modal-close" aria-label="Close" onClick={() => onClose(submitted)}>
-          <FiX aria-hidden="true" />
-        </button>
-
         <div className="sr-modal-banner">
-          <span>{config.offer.name} is LIVE</span>
-          <span className="sr-modal-banner-timer">
-            Ends in <CountdownInline />
+          <span className="sr-modal-banner-text">
+            <span className="sr-topbar-spark" aria-hidden="true">✦</span>
+            <strong>{config.offer.name}</strong> is LIVE
           </span>
+          <span className="sr-modal-banner-timer">
+            Ends in <CountdownInline trim />
+          </span>
+          <button type="button" className="sr-modal-banner-close" aria-label="Close" onClick={() => onClose(submitted)}>
+            <FiX aria-hidden="true" />
+          </button>
         </div>
 
         <div className="sr-modal-body">
@@ -81,17 +83,16 @@ export default function EnquiryModal({ packageId, source, onClose }: Props) {
             </div>
           ) : (
             <div className="sr-modal-offer">
-              <p className="sr-modal-offer-save">Save up to {maxDiscountPct(config)}%</p>
-              <p id="sr-modal-title" className="sr-modal-offer-title">
-                Claim Your {config.tripLabel.replace(/\b\w/g, c => c.toUpperCase())} Offer
-              </p>
+              <p className="sr-modal-offer-save">Save upto {maxDiscountPct(config)}%</p>
+              <p id="sr-modal-title" className="sr-modal-offer-title">Claim Your Special Holiday Offer</p>
               <p className="sr-modal-offer-sub">
-                Share your details and our {config.specialist} will call you with the best available price and a customised itinerary.
+                Enter your details and our {config.specialist} will contact you with the best available price and a customised itinerary
               </p>
             </div>
           )}
 
           <LeadForm
+            variant="modal"
             source={source}
             packageName={pkg?.title}
             submitLabel="Connect with an Expert"

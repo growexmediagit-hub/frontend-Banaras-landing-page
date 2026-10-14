@@ -1,4 +1,5 @@
 import type { LandingConfig } from "../landing";
+import { banarasMap } from "../maps/banaras";
 import hero from "@/assets/images/hero-varanasi-ghats.webp";
 import varanasiBoat from "@/assets/images/varanasi-boat-ride.webp";
 import aartiPriest from "@/assets/images/ganga-aarti-priest.webp";
@@ -11,6 +12,8 @@ import prayagraj from "@/assets/images/prayagraj-yamuna-bridge.webp";
 import vrindavan from "@/assets/images/vrindavan-prem-mandir.webp";
 import ghatsSunset from "@/assets/images/varanasi-ghats-sunset.webp";
 import ramLalla from "@/assets/images/ayodhya-ram-lalla.webp";
+// Placeholder stock portrait (Unsplash licence) — swap for a real team member before launch.
+import expertPhoto from "@/assets/images/travel-expert.jpg";
 
 // The first package mirrors the live listing on srivastavaroute.in (price,
 // itinerary, inclusions copied from it). The rest are a suggested range for
@@ -47,9 +50,6 @@ export const banaras: LandingConfig = {
     sub: "Ganga Aarti from the river, peaceful Kashi Vishwanath darshan and sunrise on the ghats — curated Varanasi journeys crafted by Srivastava Route.",
     image: hero,
     imageAlt: "Historic ghats and boats on the Ganga at Munshi Ghat, Varanasi",
-    trust: ["Tailor-made itineraries", "Verified hotels & cabs", "24/7 on-trip support"],
-    cardTitle: "Plan Your Kashi Yatra",
-    cardSub: "Free itinerary · best price · no obligation",
   },
   priceUnit: "/person",
   packageTypes: [
@@ -66,9 +66,10 @@ export const banaras: LandingConfig = {
   packagesSection: {
     eyebrow: "Handpicked",
     title: "All Varanasi Tour Packages",
+    highlight: "Varanasi",
     lead: "Every itinerary is planned by our Kashi specialists — comfortable stays, private cabs, local guides and darshan timings sorted for you. Pick one as it is, or let us tailor it.",
   },
-  dealsLead: "Our best prices on the most-loved Kashi itineraries.",
+  deals: { place: "Banaras", lead: "Exclusive pricing through direct partnerships, bulk deals & curated itineraries." },
   packages: [
     {
       id: "varanasi-prayagraj-ayodhya",
@@ -224,6 +225,7 @@ export const banaras: LandingConfig = {
     packageId: "varanasi-prayagraj-ayodhya",
     intro:
       "The spiritual heart of India in 3 nights & 4 days — Ganga Aarti in Varanasi, the sacred Triveni Sangam in Prayagraj and Lord Ram's birthplace in Ayodhya.",
+    map: banarasMap,
   },
   places: {
     eyebrow: "Top Picks",
@@ -237,6 +239,19 @@ export const banaras: LandingConfig = {
       { name: "Prayagraj", tagline: "Triveni Sangam", image: prayagraj, alt: "Prayagraj river bridge at sunset" },
       { name: "Sarnath", tagline: "Where the Buddha first taught", image: sarnath, alt: "Dhamek Stupa in Sarnath" },
       { name: "Vrindavan", tagline: "Leela bhoomi of Krishna", image: vrindavan, alt: "Prem Mandir in Vrindavan" },
+    ],
+  },
+  gallery: {
+    title: "Banaras in pictures",
+    items: [
+      { image: aarti, alt: "Ganga Aarti lamps on the ghats of Varanasi", caption: "Witness the evening Ganga Aarti" },
+      { image: varanasiBoat, alt: "Boats on the Ganga in Varanasi", caption: "Sunrise boat ride along the ghats" },
+      { image: kashiCorridor, alt: "Kashi Vishwanath Dham corridor", caption: "Darshan at Kashi Vishwanath" },
+      { image: sarnath, alt: "Dhamek Stupa at Sarnath", caption: "Walk in the Buddha's footsteps at Sarnath" },
+      { image: ghatsSunset, alt: "Varanasi ghats at sunset", caption: "Golden hour on the ghats" },
+      { image: assiGhat, alt: "Assi Ghat, Varanasi", caption: "Slow mornings at Assi Ghat" },
+      { image: prayagraj, alt: "Yamuna bridge at Prayagraj", caption: "Take a holy dip at the Sangam" },
+      { image: ayodhyaMandir, alt: "Shri Ram Janmabhoomi Mandir, Ayodhya", caption: "Visit the Ram Mandir in Ayodhya" },
     ],
   },
   why: {
@@ -316,7 +331,8 @@ export const banaras: LandingConfig = {
   ],
   whatsapp: {
     greeting: "Hi! I'm interested in your Banaras tour packages.",
-    teasers: ["Namaste! Planning a Kashi trip? 🙏", "Need help picking the right package?", "Chat with a Banaras expert now →"],
+    teasers: ["Namaste! Planning a Kashi trip? 🙏", "Need help picking the right trip?", "Hey! Liked a package? Connect with us 👋", "Chat with a Banaras expert now →"],
   },
+  expertPhoto,
   messagePlaceholder: "Temples you wish to visit, hotel preference, senior citizens travelling…",
 };

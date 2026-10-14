@@ -1,0 +1,69 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { FaWhatsapp } from "react-icons/fa6";
+import { FiChevronDown, FiMail, FiPhone } from "react-icons/fi";
+import { SITE, whatsappLink } from "@/data/site";
+
+/** atravelq-style header contact: WhatsApp icon + phone pill whose chevron opens Call / WhatsApp / Email. */
+export default function ContactPill({ greeting }: { greeting: string }) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    document.addEventListener("pointerdown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("pointerdown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const wa = whatsappLink(greeting);
+
+  return (
+    <div className="sr-contact" ref={rootRef}>
+      <a className="sr-contact-wa" href={wa} target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+        <FaWhatsapp aria-hidden="true" />
+      </a>
+
+      <button
+        type="button"
+        className="sr-contact-pill"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        onClick={() => setOpen(o => !o)}
+      >
+        {SITE.phoneDisplay}
+        <span className="sr-contact-chevron" aria-hidden="true">
+          <FiChevronDown />
+        </span>
+      </button>
+
+      {open && (
+        <ul className="sr-contact-menu" role="menu">
+          <li role="none">
+            <a role="menuitem" href={`tel:${SITE.phoneE164}`} onClick={() => setOpen(false)}>
+              <FiPhone aria-hidden="true" /> Call {SITE.phoneDisplay}
+            </a>
+          </li>
+          <li role="none">
+            <a role="menuitem" href={wa} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
+              <FaWhatsapp aria-hidden="true" /> Chat on WhatsApp
+            </a>
+          </li>
+          <li role="none">
+            <a role="menuitem" href={`mailto:${SITE.email}`} onClick={() => setOpen(false)}>
+              <FiMail aria-hidden="true" /> {SITE.email}
+            </a>
+          </li>
+        </ul>
+      )}
+    </div>
+  );
+}

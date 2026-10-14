@@ -1,5 +1,6 @@
 import type { LandingConfig } from "../landing";
-import hero from "@/assets/images/thailand/bangkok-sunset.webp";
+import { thailandMap } from "../maps/thailand";
+import bangkokSunset from "@/assets/images/thailand/bangkok-sunset.webp";
 import chaoPhraya from "@/assets/images/thailand/bangkok-chao-phraya-dusk.webp";
 import pattayaAerial from "@/assets/images/thailand/pattaya-beach-aerial.webp";
 import bangkokNight from "@/assets/images/thailand/bangkok-skyline-night.webp";
@@ -13,6 +14,8 @@ import nongNooch from "@/assets/images/thailand/nong-nooch-garden.webp";
 import phiPhi from "@/assets/images/thailand/phi-phi-island.webp";
 import railay from "@/assets/images/thailand/railay-krabi.webp";
 import phuket from "@/assets/images/thailand/phuket-beach.webp";
+// Placeholder stock portrait (Unsplash licence) — swap for a real team member before launch.
+import expertPhoto from "@/assets/images/travel-expert.jpg";
 
 // Suggested Bangkok–Pattaya range modelled on what Thrillophilia and
 // Pickyourtrail list for Indian travellers. Prices are placeholders — confirm
@@ -74,11 +77,8 @@ export const thailand: LandingConfig = {
     titleLead: "Bangkok Pattaya",
     titleAccent: "Tour Packages",
     sub: "Golden temples, island speedboats, rooftop evenings and the best street food in Asia — handcrafted Thailand holidays for couples, families and friends.",
-    image: hero,
-    imageAlt: "Bangkok city skyline glowing under a red sunset",
-    trust: ["Indian meals on tours", "Private airport transfers", "24/7 on-trip support"],
-    cardTitle: "Plan Your Thailand Holiday",
-    cardSub: "Free itinerary · best price · no obligation",
+    image: phiPhi,
+    imageAlt: "Longtail boat in the turquoise lagoon of Phi Phi Leh, framed by limestone cliffs",
   },
   priceUnit: "/adult",
   priceNote: "Prices per adult on twin sharing, excluding international flights & visa fees.",
@@ -97,9 +97,10 @@ export const thailand: LandingConfig = {
   packagesSection: {
     eyebrow: "Handpicked",
     title: "All Bangkok Pattaya Packages",
+    highlight: "Pattaya",
     lead: "Every trip is planned by our Thailand experts — handpicked hotels, private transfers, Indian meals on tours and the right mix of beach, city and nightlife. Book as it is or let us tailor it.",
   },
-  dealsLead: "Our lowest prices on the most-booked Thailand itineraries.",
+  deals: { place: "Pattaya", lead: "Exclusive pricing through direct partnerships, bulk deals & curated itineraries." },
   packages: [
     {
       id: "bangkok-pattaya-getaway",
@@ -234,6 +235,7 @@ export const thailand: LandingConfig = {
     packageId: "bangkok-pattaya-getaway",
     intro:
       "Our most-booked Thailand trip — two easy nights by the sea in Pattaya with a Coral Island day, then the temples, markets and lights of Bangkok.",
+    map: thailandMap,
   },
   facts: [
     { label: "Best time", value: "Nov – Feb", icon: "calendar" },
@@ -270,6 +272,19 @@ export const thailand: LandingConfig = {
       { name: "Chao Phraya Cruise", tagline: "Dinner on the river under city lights", image: chaoPhraya, alt: "Boats on the Chao Phraya river at dusk" },
     ],
   },
+  gallery: {
+    title: "Thailand in pictures",
+    items: [
+      { image: grandPalace, alt: "Gilded roofs of the Grand Palace, Bangkok", caption: "Marvel at the Grand Palace" },
+      { image: floatingMarket, alt: "Boats laden with fruit at a floating market", caption: "Shop a floating market by boat" },
+      { image: sanctuary, alt: "Carved teak spires of the Sanctuary of Truth, Pattaya", caption: "Explore the Sanctuary of Truth" },
+      { image: coralIsland, alt: "Sunset over Coral Island", caption: "Speedboat to Coral Island" },
+      { image: watArunChapel, alt: "Wat Arun temple chapel in Bangkok", caption: "Immerse yourself in Buddhist culture" },
+      { image: nongNooch, alt: "Landscaped lawns at Nong Nooch Garden", caption: "Wander Nong Nooch Garden" },
+      { image: railay, alt: "Limestone cliffs above Railay beach, Krabi", caption: "Swim beneath Railay's cliffs" },
+      { image: chaoPhraya, alt: "Chao Phraya river at dusk, Bangkok", caption: "Cruise the Chao Phraya at dusk" },
+    ],
+  },
   why: {
     eyebrow: "Why Srivastava Route",
     title: "Thailand, Planned the Way You Like It",
@@ -292,7 +307,7 @@ export const thailand: LandingConfig = {
     { title: "Fly & enjoy", text: "Hotels, transfers and tours confirmed — with support on WhatsApp throughout." },
   ],
   plan: {
-    image: phiPhi,
+    image: bangkokSunset,
     eyebrow: "Ready for Thailand?",
     title: "Let Our Thailand Experts Plan It For You",
     lead: "Share your dates and wishes — we'll send a personalised itinerary with transparent pricing. Flights from your city can be added on request.",
@@ -354,7 +369,8 @@ export const thailand: LandingConfig = {
   ],
   whatsapp: {
     greeting: "Hi! I'm interested in your Bangkok Pattaya tour packages.",
-    teasers: ["Sawasdee! Planning a Thailand trip? 🌴", "Need help picking the right package?", "Chat with a Thailand expert now →"],
+    teasers: ["Sawasdee! Planning a Thailand trip? 🌴", "Need help picking the right trip?", "Hey! Liked a package? Connect with us 👋", "Chat with a Thailand expert now →"],
   },
+  expertPhoto,
   messagePlaceholder: "Departure city, honeymoon or family trip, hotel preference, add Phuket/Krabi…",
 };

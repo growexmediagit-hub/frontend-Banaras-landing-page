@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FiCheck, FiClock, FiExternalLink, FiMapPin, FiX } from "react-icons/fi";
 import { durationLabel, formatINR, spotlightPackage, type LandingConfig } from "@/data/landing";
 import EnquireButton from "../enquiry/EnquireButton";
+import RouteMap from "./RouteMap";
 
 /** Day-by-day plan of the bestseller package. */
 export default function ItinerarySpotlight({ config }: { config: LandingConfig }) {
@@ -32,6 +33,24 @@ export default function ItinerarySpotlight({ config }: { config: LandingConfig }
                 </li>
               ))}
             </ol>
+
+            {config.spotlight.map && (
+              <figure className="sr-route" data-aos="fade-up">
+                <RouteMap map={config.spotlight.map} label={`Route map: ${pkg.route.join(" to ")}`} />
+                <figcaption>
+                  <span className="sr-route-title">Your route</span>
+                  <span>{(pkg.stops ?? pkg.route).join(" → ")}</span>
+                  <span className="sr-route-key">
+                    <i className="sr-route-key-road" aria-hidden="true" /> By road
+                    {config.spotlight.map.legs.some(l => l.mode === "boat") && (
+                      <>
+                        <i className="sr-route-key-boat" aria-hidden="true" /> By boat
+                      </>
+                    )}
+                  </span>
+                </figcaption>
+              </figure>
+            )}
 
             {!!(pkg.inclusions?.length || pkg.exclusions?.length) && (
               <div className="sr-incl" data-aos="fade-up">

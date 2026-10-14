@@ -25,7 +25,8 @@ export function CountdownTiles({ label, tone = "light", units = true }: TilesPro
             <span className="sr-clock-group">
               <span className="sr-clock-digits" aria-hidden="true">
                 {value.split("").map((d, j) => (
-                  <span key={j} className="sr-clock-tile">{d}</span>
+                  // keyed by value so a changed digit remounts and replays its tick animation
+                  <span key={`${j}-${d}`} className="sr-clock-tile">{d}</span>
                 ))}
               </span>
               {units && <span className="sr-clock-unit" aria-hidden="true">{unit}</span>}
@@ -37,12 +38,13 @@ export function CountdownTiles({ label, tone = "light", units = true }: TilesPro
   );
 }
 
-/** Compact "03d : 04h : 05m : 53s" text clock for the marquee and top strip. */
-export function CountdownInline() {
-  const { dd, hh, mm, ss } = useCountdown();
+/** "03d : 04h : 05m : 53s" text clock; `trim` drops leading zeros ("3d : 4h : 5m : 53s"). */
+export function CountdownInline({ trim = false }: { trim?: boolean }) {
+  const parts = useCountdown();
+  const fmt = (v: string) => (trim && v !== "--" ? String(Number(v)) : v);
   return (
     <span className="sr-clock-inline">
-      {dd}d : {hh}h : {mm}m : {ss}s
+      {fmt(parts.dd)}d : {fmt(parts.hh)}h : {fmt(parts.mm)}m : {fmt(parts.ss)}s
     </span>
   );
 }

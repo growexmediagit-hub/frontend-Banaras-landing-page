@@ -2,13 +2,13 @@
 // validate the same way.
 
 export const COUNTRY_CODES = [
-  { code: "+91", label: "IN +91", min: 10, max: 10 },
-  { code: "+1", label: "US +1", min: 10, max: 10 },
-  { code: "+44", label: "UK +44", min: 10, max: 10 },
-  { code: "+971", label: "AE +971", min: 9, max: 9 },
-  { code: "+61", label: "AU +61", min: 9, max: 9 },
-  { code: "+65", label: "SG +65", min: 8, max: 8 },
-  { code: "+977", label: "NP +977", min: 10, max: 10 },
+  { code: "+91", label: "🇮🇳 +91", min: 10, max: 10 },
+  { code: "+1", label: "🇺🇸 +1", min: 10, max: 10 },
+  { code: "+44", label: "🇬🇧 +44", min: 10, max: 10 },
+  { code: "+971", label: "🇦🇪 +971", min: 9, max: 9 },
+  { code: "+61", label: "🇦🇺 +61", min: 9, max: 9 },
+  { code: "+65", label: "🇸🇬 +65", min: 8, max: 8 },
+  { code: "+977", label: "🇳🇵 +977", min: 10, max: 10 },
 ] as const;
 
 export const phoneRule = (code: string) =>

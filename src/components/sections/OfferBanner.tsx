@@ -9,14 +9,17 @@ export default function OfferBanner({ config, source }: { config: LandingConfig;
     <section className="sr-offer-wrap" aria-label="Current offer">
       <div className="sr-container">
         <div className="sr-offer" data-aos="zoom-in-up">
+          <span className="sr-offer-eyebrow">
+            <span className="sr-offer-live" aria-hidden="true" /> Limited-time offer
+          </span>
           <p className="sr-offer-text">
             <strong className="sr-offer-name">{config.offer.name}</strong> — Up to{" "}
-            <strong>{maxDiscountPct(config)}% OFF</strong> on selected trips
+            <strong className="sr-offer-pct">{maxDiscountPct(config)}% OFF</strong> on selected trips
           </p>
           <div className="sr-offer-row">
             <CountdownTiles label="Sale ends in" tone="dark" units={false} />
             <EnquireButton source={source} className="sr-offer-btn">
-              Grab This Deal <FiArrowRight aria-hidden="true" />
+              <span>Grab This Deal</span> <FiArrowRight aria-hidden="true" />
             </EnquireButton>
           </div>
         </div>
