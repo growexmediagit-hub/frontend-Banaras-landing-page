@@ -1761,15 +1761,22 @@ footer {
   transition: transform 0.4s var(--ease), color 0.3s;
 }
 
-.sr-share-wa:hover {
-  background: var(--wa);
-  border-color: var(--wa);
+.sr-share-wa:hover,
+.sr-share-wa:focus-visible {
+  background: #1d7a4c;
+  border-color: #1d7a4c;
   color: var(--white);
-  box-shadow: 0 10px 22px rgba(37, 211, 102, 0.28);
-  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(29, 122, 76, 0.28);
+  transform: translateY(-2px);
 }
 
-.sr-share-wa:hover svg {
+.sr-share-wa:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(29, 122, 76, 0.22);
+}
+
+.sr-share-wa:hover svg,
+.sr-share-wa:focus-visible svg {
   color: var(--white);
   transform: scale(1.1) rotate(-8deg);
 }
