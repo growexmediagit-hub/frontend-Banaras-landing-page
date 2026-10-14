@@ -67,7 +67,7 @@ export default function Header() {
 
         <div className="sr-nav-actions">
           <ContactPill greeting={config.whatsapp.greeting} />
-          <button type="button" className="sr-btn sr-btn--navy sr-btn--sm" onClick={() => open({ source: "header" })}>
+          <button type="button" className="sr-btn sr-btn--gold sr-btn--sm" onClick={() => open({ source: "header" })}>
             Book Now
           </button>
           <button
